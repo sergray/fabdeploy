@@ -17,14 +17,17 @@ def _patched_run_command(
     pty=True,
     combine_stderr=True,
     sudo=False,
-    user=None):
+    user=None,
+    quiet=False, warn_only=False, stdout=None, stderr=None, group=None):
     if sudo:
         with sudo_user():
             return _run_command(command, shell=shell, pty=pty,
-                combine_stderr=combine_stderr, sudo=sudo, user=user)
+                combine_stderr=combine_stderr, sudo=sudo, user=user, group=group,
+                quiet=quiet, warn_only=warn_only, stdout=stdout, stderr=stderr)
     else:
         return _run_command(command, shell=shell, pty=pty,
-            combine_stderr=combine_stderr, sudo=sudo, user=user)
+            combine_stderr=combine_stderr, sudo=sudo, user=user, group=group,
+            quiet=quiet, warn_only=warn_only, stdout=stdout, stderr=stderr)
 
 
 def patched_put(

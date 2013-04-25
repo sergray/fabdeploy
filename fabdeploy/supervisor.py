@@ -133,9 +133,9 @@ class PushConfigs(Task):
         return '    %(current_etc_link)s/supervisor/*.conf'
 
     def do(self):
-        with cd(self.conf.supervisor_config_path):
+       # with cd(self.conf.supervisor_config_path):
             # force is needed when folder is empty
-            run('rm --force *.conf')
+            #run('rm --force *.conf')
 
         for program in self.conf.supervisor_programs:
             config = '%s.conf' % program

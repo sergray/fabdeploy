@@ -35,8 +35,8 @@ class Push(GitTask):
     @conf
     def dir(self):
         return self.conf.release_path \
-            .replace(self.conf.home_path, '') \
             .strip(os.sep)
+            #.replace(self.conf.home_path, '') \
 
     @conf
     def options(self):
@@ -44,7 +44,7 @@ class Push(GitTask):
 
     def do(self):
         local('git push '
-              'ssh://%(user)s@%(host)s/~%(user)s/%(dir)s '
+              'ssh://%(user)s@%(host)s/%(dir)s '
               '%(repo_branch)s' % self.conf)
 
         with cd(self.conf.release_path):

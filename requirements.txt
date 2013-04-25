@@ -1,4 +1,4 @@
 nose
-fabric
+fabric==1.5.4
 jinja2
 ordereddict

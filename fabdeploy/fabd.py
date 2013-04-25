@@ -33,13 +33,16 @@ class Mkdirs(Task):
 
     def do(self):
         home_dirs, sudo_dirs = [], []
-        for k, v in self.conf.items():
+        for k in self.conf.keys():
             if k.endswith('_path'):
+                v = self.conf[k]
                 if v.startswith(self.conf.home_path):
                     home_dirs.append(v)
                 else:
                     sudo_dirs.append(v)
 
+        sudo('mkdir --parents %s' % self.conf.home_path)
+        sudo(('chown --recursive %(user)s:%(user)s ' + self.conf.home_path) % self.conf)
         run('mkdir --parents %s' % ' '.join(home_dirs))
         sudo('mkdir --parents %s' % ' '.join(sudo_dirs))
 

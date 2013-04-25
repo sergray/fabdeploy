@@ -77,7 +77,7 @@ activate = Activate()
 class ListReleases(Task):
     def releases(self):
         releases = []
-        for file in list_files(self.conf.home_path):
+        for file in list_files(self.conf.releases_path):
             name = posixpath.basename(file)
             try:
                 datetime.datetime.strptime(name, self.conf.time_format)
