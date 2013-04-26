@@ -26,10 +26,9 @@ def _patched_run_command(
                 combine_stderr=combine_stderr, sudo=sudo, user=user, group=group,
                 quiet=quiet, warn_only=warn_only, stdout=stdout, stderr=stderr)
     else:
-        with sudo_user():
-            return _run_command(command, shell=shell, pty=pty,
-                combine_stderr=combine_stderr, sudo=True, user=env.conf.user, group=group,
-                quiet=quiet, warn_only=warn_only, stdout=stdout, stderr=stderr)
+        return _run_command(command, shell=shell, pty=pty,
+            combine_stderr=combine_stderr, sudo=sudo, user=env.conf.user, group=group,
+            quiet=quiet, warn_only=warn_only, stdout=stdout, stderr=stderr)
 
 
 def patched_put(
@@ -44,11 +43,8 @@ def patched_put(
                 use_sudo=use_sudo, mirror_local_mode=mirror_local_mode,
                 mode=mode)
     else:
-        with sudo_user():
-            ret = put(local_path=local_path, remote_path=remote_path,
-            use_sudo=True, mirror_local_mode=mirror_local_mode, mode=mode)
-        sudo(('chown --recursive %(user)s:%(user)s ' + remote_path) % env.conf)
-        return ret
+        return put(local_path=local_path, remote_path=remote_path,
+            use_sudo=use_sudo, mirror_local_mode=mirror_local_mode, mode=mode)
 
 
 def patch_all():
