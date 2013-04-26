@@ -1,5 +1,6 @@
 from fabric import operations
 from fabric.contrib import files
+from fabric.api import sudo, env
 
 from .utils import sudo_user
 
@@ -25,9 +26,10 @@ def _patched_run_command(
                 combine_stderr=combine_stderr, sudo=sudo, user=user, group=group,
                 quiet=quiet, warn_only=warn_only, stdout=stdout, stderr=stderr)
     else:
-        return _run_command(command, shell=shell, pty=pty,
-            combine_stderr=combine_stderr, sudo=sudo, user=user, group=group,
-            quiet=quiet, warn_only=warn_only, stdout=stdout, stderr=stderr)
+        with sudo_user():
+            return _run_command(command, shell=False, pty=pty,
+                combine_stderr=combine_stderr, sudo=True, user=env.conf.user, group=group,
+                quiet=quiet, warn_only=warn_only, stdout=stdout, stderr=stderr)
 
 
 def patched_put(
@@ -42,8 +44,11 @@ def patched_put(
                 use_sudo=use_sudo, mirror_local_mode=mirror_local_mode,
                 mode=mode)
     else:
-        return put(local_path=local_path, remote_path=remote_path,
-            use_sudo=use_sudo, mirror_local_mode=mirror_local_mode, mode=mode)
+        with sudo_user():
+            ret = put(local_path=local_path, remote_path=remote_path,
+            use_sudo=True, mirror_local_mode=mirror_local_mode, mode=mode)
+        sudo(('chown --recursive %(user)s:%(user)s ' + remote_path) % env.conf)
+        return ret
 
 
 def patch_all():
