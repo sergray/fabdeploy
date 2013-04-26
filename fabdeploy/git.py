@@ -44,8 +44,9 @@ class Push(GitTask):
 
     def do(self):
         local('git push '
-              'ssh://%(user)s@%(host)s/%(dir)s '
+              'ssh://%(sudo_user)s@%(host)s/%(dir)s '
               '%(repo_branch)s' % self.conf)
+        sudo('chown --recursive %(user)s:%(user)s %(dir)s' % self.conf)
 
         with cd(self.conf.release_path):
             run('git checkout --force %(repo_branch)s' % self.conf)

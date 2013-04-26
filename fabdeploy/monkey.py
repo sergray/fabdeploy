@@ -27,7 +27,7 @@ def _patched_run_command(
                 quiet=quiet, warn_only=warn_only, stdout=stdout, stderr=stderr)
     else:
         with sudo_user():
-            return _run_command(command, shell=False, pty=pty,
+            return _run_command(command, shell=shell, pty=pty,
                 combine_stderr=combine_stderr, sudo=True, user=env.conf.user, group=group,
                 quiet=quiet, warn_only=warn_only, stdout=stdout, stderr=stderr)
 
