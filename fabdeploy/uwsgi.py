@@ -18,7 +18,7 @@ __all__ = [
 
 class InstallDeps(Task):
     def do(self):
-        system.package_install(
+        system.package_install.run(
             packages='build-essential python-dev libxml2-dev')
 
 install_deps = InstallDeps()
@@ -26,7 +26,7 @@ install_deps = InstallDeps()
 
 class Install(Task):
     def do(self):
-        return pip.install('uwsgi')
+        return pip.install.run(app='uwsgi')
 
 install = Install()
 
