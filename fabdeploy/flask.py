@@ -1,9 +1,12 @@
 import os
 import posixpath
+
 from fabric.contrib import files
+from fabric.api import run
 
 from .containers import conf
 from .task import Task
+from .utils import inside_django
 
 __all__ = [
     'push_flask_config',
@@ -29,3 +32,25 @@ class PushFlaskConfig(Task):
             use_jinja=True)
 
 push_flask_config = PushFlaskConfig()
+
+class Manage(Task):
+    @conf
+    def options(self):
+        return ''
+
+    @inside_django
+    def do(self):
+        run('python manage.py %(command)s %(options)s' % self.conf)
+
+manage = Manage()
+
+class Migrate(Manage):
+    @conf
+    def app(self):
+        return ''
+
+    @conf
+    def command(self):
+        return 'migrate %(app)s'
+
+migrate = Migrate()

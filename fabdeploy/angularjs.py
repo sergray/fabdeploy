@@ -11,7 +11,8 @@ from .task import Task
 __all__ = [
     'push_config',
     'build',
-    'init'
+    'init',
+    'activate'
 ]
 
 
@@ -54,5 +55,21 @@ class Init(Task):
 
     def do(self):
         run('cd %(project_path)s/ui; ./scripts/init.sh' % self.conf)
+        run('cp -r %(project_path)s/ui/node_modules %(var_path)s/node_modules' % self.conf)
+        run('rm --force %(project_path)s/ui/node_modules' % self.conf)
 
 init = Init()
+
+class Activate(Task):
+    @conf
+    def options(self):
+        return ''
+
+    def do(self):
+        run('ln '
+            '--symbolic '
+            '--force '
+            '--no-target-directory '
+            '%(var_path)s/node_modules %(project_path)s/ui/node_modules' % self.conf)
+
+activate = Activate()
