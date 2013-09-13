@@ -86,7 +86,8 @@ def inside_project(func):
     @wraps(func)
     def inner(*args, **kwargs):
         with cd(env.conf.project_path):
-            return func(*args, **kwargs)
+            with virtualenv():
+                return func(*args, **kwargs)
     return inner
 
 
