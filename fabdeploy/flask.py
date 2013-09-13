@@ -46,11 +46,7 @@ manage = Manage()
 
 class Migrate(Manage):
     @conf
-    def app(self):
-        return ''
-
-    @conf
     def command(self):
-        return 'migrate %(app)s'
+        return 'migrate'
 
 migrate = Migrate()
