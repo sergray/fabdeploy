@@ -10,6 +10,8 @@ from .utils import inside_django
 
 __all__ = [
     'push_flask_config',
+    'manage',
+    'migrate'
 ]
 
 
