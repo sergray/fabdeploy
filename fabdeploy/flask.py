@@ -6,7 +6,7 @@ from fabric.api import run
 
 from .containers import conf
 from .task import Task
-from .utils import inside_django
+from .utils import inside_project
 
 __all__ = [
     'push_flask_config',
@@ -40,7 +40,7 @@ class Manage(Task):
     def options(self):
         return ''
 
-    @inside_django
+    @inside_project
     def do(self):
         run('python manage.py %(command)s %(options)s' % self.conf)
 
