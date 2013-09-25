@@ -135,7 +135,7 @@ def upload_config_template(
 def upload_init_template(name, name_to=None, **kwargs):
     template = 'init/' + name
     if name_to is None:
-        name_to = name_to
+        name_to = name
     to = posixpath.join('/etc/init', name_to)
     upload_config_template(template, to, use_sudo=True, **kwargs)
     sudo('chown --recursive root:root ' + to)
