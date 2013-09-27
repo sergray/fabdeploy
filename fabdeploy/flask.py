@@ -11,7 +11,8 @@ from .utils import inside_project
 __all__ = [
     'push_flask_config',
     'manage',
-    'migrate'
+    'migrate',
+    'shell'
 ]
 
 
@@ -52,3 +53,10 @@ class Migrate(Manage):
         return 'migrate'
 
 migrate = Migrate()
+
+class Shell(Manage):
+    @conf
+    def command(self):
+        return 'shell'
+
+shell = Shell()
