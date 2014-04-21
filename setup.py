@@ -21,7 +21,10 @@ setup(
         'config_templates/init/*.*',
         'config_templates/*.*',
     ]},
-    install_requires=['fabric', 'jinja2'],
+    requires=[
+        'fabric (<1.6)',
+        'jinja2',
+    ],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Environment :: Web Environment',
